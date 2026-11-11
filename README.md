@@ -33,3 +33,10 @@ actually hits while staying dependency-free and predictable.
 A joiner at the edge of a word is dropped. `"end-"` yields `["end"]`, and
 `"'tis"` yields `["tis"]`, because there is no word character on both sides.
 If you need to preserve those characters, post-process the input or the output.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
